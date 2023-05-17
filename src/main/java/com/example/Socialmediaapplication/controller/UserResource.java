@@ -3,6 +3,7 @@ package com.example.Socialmediaapplication.controller;
 import com.example.Socialmediaapplication.DaoService.UserDaoService;
 import com.example.Socialmediaapplication.Exception.UserNotFoundException;
 import com.example.Socialmediaapplication.model.User;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -31,7 +32,7 @@ public class UserResource {
         return user;
     }
     @PostMapping("/users")
-    public ResponseEntity<User> createUser(@RequestBody User user){
+    public ResponseEntity<User> createUser(@Valid @RequestBody User user){
         User save = service.save(user);
         URI location= ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(save.getId()).toUri();
         return ResponseEntity.created(location).build();
