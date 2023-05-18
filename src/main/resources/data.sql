@@ -1,0 +1,10 @@
+insert into user_details(id,birth_date,name) values (10001,current_date(),'Mac');
+insert into user_details(id,birth_date,name) values (10002,current_date(),'Mali');
+insert into user_details(id,birth_date,name) values (10003,current_date(),'Raj');
+insert into user_details(id,birth_date,name) values (10004,current_date(),'Ravi');
+insert into user_details(id,birth_date,name) values (10005,current_date(),'Joli');
+insert into user_details(id,birth_date,name) values (10006,current_date(),'Pramod');
+insert into user_details(id,birth_date,name) values (10007,current_date(),'Sakshi');
+insert into user_details(id,birth_date,name) values (10008,current_date(),'Vogel');
+insert into user_details(id,birth_date,name) values (10009,current_date(),'Mac kato');
+insert into user_details(id,birth_date,name) values (100010,current_date(),'Shiva');
