@@ -1,4 +1,5 @@
 package com.example.Socialmediaapplication.model;
+import com.fasterxml.jackson.annotation.JsonFilter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
@@ -8,6 +9,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@JsonFilter("SomeBeanFilter")
 //@JsonIgnoreProperties({"field1","field2"})
 public class SomeBean {
     private String field1;
