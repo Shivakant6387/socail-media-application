@@ -8,3 +8,13 @@ insert into user_details(id,birth_date,name) values (10007,current_date(),'Saksh
 insert into user_details(id,birth_date,name) values (10008,current_date(),'Vogel');
 insert into user_details(id,birth_date,name) values (10009,current_date(),'Mac kato');
 insert into user_details(id,birth_date,name) values (100010,current_date(),'Shiva');
+insert into post(id,description,user_id)values (20001,'I want to learn AWS',10001);
+insert into post(id,description,user_id)values (20002,'I want to learn WEB',10002);
+insert into post(id,description,user_id)values (20003,'I want to learn PYTHON',10003);
+insert into post(id,description,user_id)values (20004,'I want to learn JAVA',10004);
+insert into post(id,description,user_id)values (20005,'I want to learn AWS I AM',10005);
+insert into post(id,description,user_id)values (20006,'I want to learn AWS EC2',10006);
+insert into post(id,description,user_id)values (20007,'I want to learn AWS ',10007);
+insert into post(id,description,user_id)values (20008,'I want to learn AWS Getway',10008);
+insert into post(id,description,user_id)values (20009,'I want to learn AWS Lambda',10009);
+insert into post(id,description,user_id)values (200010,'I want to learn DevOps',100010);
