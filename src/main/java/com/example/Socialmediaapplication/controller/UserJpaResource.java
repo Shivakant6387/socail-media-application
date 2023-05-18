@@ -3,6 +3,7 @@ package com.example.Socialmediaapplication.controller;
 import com.example.Socialmediaapplication.DaoService.UserDaoService;
 import com.example.Socialmediaapplication.Exception.UserNotFoundException;
 import com.example.Socialmediaapplication.model.User;
+import com.example.Socialmediaapplication.repository.UserRepository;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.EntityModel;
@@ -13,48 +14,48 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
 import java.util.List;
+import java.util.Optional;
 
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
-
 @RestController
-public class UserResource {
+public class UserJpaResource {
     @Autowired
     private UserDaoService service;
-//    public UserResource(UserDaoService service){
-//        this.service=service;
-//    }
-    @GetMapping("/users")
-    public List<User>retrieveAllUsers(){
-        return service.findAll();
+    @Autowired
+    private UserRepository userRepository;
+
+    @GetMapping("/jpa/users")
+    public List<User> retrieveAllUsers(){
+        return userRepository.findAll();
     }
-    @GetMapping("/usersId/{id}")
+    @GetMapping("/jpa/usersId/{id}")
     public EntityModel< User> retrieveUserById(@PathVariable int id){
 
-        User user = service.findOne(id);
-        if (user==null)
+        Optional<User> user = userRepository.findById(id);
+        if (user.isEmpty())
             throw new UserNotFoundException("id:"+id);
-        EntityModel<User>entityModel=EntityModel.of(user);
+        EntityModel<User>entityModel=EntityModel.of(user.get());
         WebMvcLinkBuilder link=linkTo(methodOn(this.getClass()).retrieveAllUsers());
         entityModel.add(link.withRel("all-users"));
         return entityModel;
     }
-    @GetMapping("/users/{id}")
-    public User retrieveUser(@PathVariable int id){
+    @GetMapping("/jpa/users/{id}")
+    public Optional<User> retrieveUser(@PathVariable int id){
 
-        User user = service.findOne(id);
-        if (user==null)
+        Optional<User> user = userRepository.findById(id);
+        if (user.isEmpty())
             throw new UserNotFoundException("id:"+id);
         return user;
     }
-    @PostMapping("/users")
+    @PostMapping("/jpa/users")
     public ResponseEntity<User> createUser(@Valid @RequestBody User user){
-        User save = service.save(user);
+        User save = userRepository.save(user);
         URI location= ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(save.getId()).toUri();
         return ResponseEntity.created(location).build();
     }
-    @DeleteMapping("/users/{id}")
+    @DeleteMapping("/jpa/users/{id}")
     public void deleteUser(@PathVariable int id){
-        service.deleteById(id);
+        userRepository.deleteById(id);
     }
 }
