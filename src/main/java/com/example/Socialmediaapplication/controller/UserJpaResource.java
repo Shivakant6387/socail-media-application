@@ -1,7 +1,7 @@
 package com.example.Socialmediaapplication.controller;
 
-import com.example.Socialmediaapplication.DaoService.UserDaoService;
 import com.example.Socialmediaapplication.Exception.UserNotFoundException;
+import com.example.Socialmediaapplication.model.Post;
 import com.example.Socialmediaapplication.model.User;
 import com.example.Socialmediaapplication.repository.UserRepository;
 import jakarta.validation.Valid;
@@ -55,5 +55,12 @@ public class UserJpaResource {
     @DeleteMapping("/jpa/users/{id}")
     public void deleteUser(@PathVariable int id){
         userRepository.deleteById(id);
+    }
+    @GetMapping("/jpa/users/{id}/post")
+    public List<Post> retrivePostsForUser(@PathVariable int id){
+        Optional<User> user = userRepository.findById(id);
+        if (user.isEmpty())
+            throw new UserNotFoundException("id:"+id);
+     return user.get().getPosts();
     }
 }
