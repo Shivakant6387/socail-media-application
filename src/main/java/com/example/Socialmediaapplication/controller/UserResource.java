@@ -21,9 +21,6 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 public class UserResource {
     @Autowired
     private UserDaoService service;
-//    public UserResource(UserDaoService service){
-//        this.service=service;
-//    }
     @GetMapping("/users")
     public List<User>retrieveAllUsers(){
         return service.findAll();
