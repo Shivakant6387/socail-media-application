@@ -3,6 +3,7 @@ package com.example.Socialmediaapplication.controller;
 import com.example.Socialmediaapplication.Exception.UserNotFoundException;
 import com.example.Socialmediaapplication.model.Post;
 import com.example.Socialmediaapplication.model.User;
+import com.example.Socialmediaapplication.repository.PostRepository;
 import com.example.Socialmediaapplication.repository.UserRepository;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +23,8 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 public class UserJpaResource {
     @Autowired
     private UserRepository userRepository;
+    @Autowired
+    private PostRepository postRepository;
 
     @GetMapping("/jpa/users")
     public List<User> retrieveAllUsers(){
@@ -62,5 +65,15 @@ public class UserJpaResource {
         if (user.isEmpty())
             throw new UserNotFoundException("id:"+id);
      return user.get().getPosts();
+    }
+    @PostMapping("/jpa/users/{id}/post")
+    public ResponseEntity<Object> createPostForUser(@PathVariable int id,@Valid @RequestBody Post post){
+        Optional<User> user = userRepository.findById(id);
+        if (user.isEmpty())
+            throw new UserNotFoundException("id:"+id);
+        post.setUser(user.get());
+        Post save = postRepository.save(post);
+        URI location= ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(save.getId()).toUri();
+        return ResponseEntity.created(location).build();
     }
 }
