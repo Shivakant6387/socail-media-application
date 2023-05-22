@@ -4,9 +4,11 @@ import com.example.Socialmediaapplication.model.Name;
 import com.example.Socialmediaapplication.model.PersonV1;
 import com.example.Socialmediaapplication.model.PersonV2;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
+@RequestMapping("/api")
 public class VersioningPersonController {
     @GetMapping("/v1/person")
     public PersonV1 getFirstVersionOfPerson(){
