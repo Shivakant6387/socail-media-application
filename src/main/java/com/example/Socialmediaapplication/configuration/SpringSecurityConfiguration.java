@@ -30,10 +30,17 @@ public class SpringSecurityConfiguration {
 //        InMemoryUserDetailsManager userDetailsManager=new InMemoryUserDetailsManager(userDetails);
 //        return userDetailsManager;
 //    }
-    @Bean
-    JdbcUserDetailsManager userDetailsManagers(DataSource dataSource){
-        return new JdbcUserDetailsManager(dataSource);
-    }
+//    @Bean
+//    JdbcUserDetailsManager userDetailsManagers(DataSource dataSource){
+//        return new JdbcUserDetailsManager(dataSource);
+//    }
+@Bean
+public JdbcUserDetailsManager jdbcUserDetailsManager(DataSource dataSource) throws Exception {
+    JdbcUserDetailsManager userDetailsManager = new JdbcUserDetailsManager(dataSource);
+    userDetailsManager.setUsersByUsernameQuery("SELECT username, password, enabled FROM users WHERE username = ?");
+    userDetailsManager.setAuthoritiesByUsernameQuery("SELECT username, authority FROM authorities WHERE username = ?");
+    return userDetailsManager;
+}
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity httpSecurity)throws Exception{
         httpSecurity.authorizeRequests(authorizeRequests->
