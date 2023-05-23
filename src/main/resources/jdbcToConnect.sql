@@ -8,8 +8,8 @@ DROP TABLE IF EXISTS `users`;
 --
 
 CREATE TABLE `users` (
-                         `username` varchar(50) NOT NULL,
-                         `password` varchar(50) NOT NULL,
+                         `username` varchar(80) NOT NULL,
+                         `password` varchar(80) NOT NULL,
                          `enabled` tinyint NOT NULL,
                          PRIMARY KEY (`username`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -20,9 +20,9 @@ CREATE TABLE `users` (
 
 INSERT INTO `users`
 VALUES
-    ('user','{noop}kill',1),
-    ('manager','{noop}killed',1),
-    ('admin','{noop}killer',1);
+    ('user','{bcrypt}$2a$12$kDdS5XTf8RFjjXlHwJf0/ev3/E1AAa0lMTCRTzuKeuFDbxdpi0rgO',1),
+    ('manager','{bcrypt}$2a$12$Mp2sgCpF4VbYYARbfgaNeuK06SwDxx6CV/jMX.ZyvoYi4agGFFdNq',1),
+    ('admin','{bcrypt}$2a$12$Eh3DPf7FtYBMupzAquz/rut98aJmZPC6gloP2rj3gMou64j10Nqva',1);
 
 
 --
@@ -30,8 +30,8 @@ VALUES
 --
 
 CREATE TABLE `authorities` (
-                               `username` varchar(50) NOT NULL,
-                               `authority` varchar(50) NOT NULL,
+                               `username` varchar(80) NOT NULL,
+                               `authority` varchar(80) NOT NULL,
                                UNIQUE KEY `authorities_idx_1` (`username`,`authority`),
                                CONSTRAINT `authorities_ibfk_1` FOREIGN KEY (`username`) REFERENCES `users` (`username`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
